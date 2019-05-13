@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/jinzhu/gorm"
-	"database-migrator/seeds"
+	"github.com/pocockn/database-migrator/seeds"
 )
 
 func processSeeds(db *gorm.DB) error {
@@ -20,7 +20,6 @@ func processSeeds(db *gorm.DB) error {
 
 func getSeeds() []func(db *gorm.DB) error {
 	return []func(db *gorm.DB) error{
-		seeds.SeedTeamTable,
-		seeds.SeedPlayerTable,
+		seeds.SeedShoutTable,
 	}
 }

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"database-migrator/migrations"
-	gormigrate "gopkg.in/gormigrate.v1"
+	"github.com/pocockn/database-migrator/migrations"
+	"gopkg.in/gormigrate.v1"
 )
 
 // GenerateMigrations generates migrations for our db.

@@ -6,8 +6,8 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"database-migrator/config"
-	"github.com/pocockn/models/api/football"
+	"github.com/pocockn/database-migrator/config"
+	"github.com/pocockn/models/api/shouts"
 	"gopkg.in/gormigrate.v1"
 )
 
@@ -34,8 +34,7 @@ func main() {
 	gormMigrator.InitSchema(func(tx *gorm.DB) error {
 		log.Print("Creating initial table schema...")
 		err := tx.AutoMigrate(
-			&football.Team{},
-			&football.Player{},
+			&shouts.Shout{},
 		)
 
 		if err != nil {

@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"database-migrator/config"
+	"github.com/pocockn/database-migrator/config"
 	"github.com/stretchr/testify/assert"
 )
 

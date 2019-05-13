@@ -7,7 +7,7 @@ import (
 
 // SeedShoutTable seeds the team table with test data.
 func SeedShoutTable(db *gorm.DB) error {
-	teams := seedTeams()
+	teams := seedShouts()
 
 	for _, team := range teams {
 		err := db.Create(&team).Error
@@ -20,17 +20,17 @@ func SeedShoutTable(db *gorm.DB) error {
 }
 
 func seedShouts() []shouts.Shout {
-	var shouts []shouts.Shout
+	var shoutsList []shouts.Shout
 
-	shouts = append(
-		shouts,
+	shoutsList = append(
+		shoutsList,
 		shouts.Shout{
-
+			Image: "https://adobe99u.files.wordpress.com/2018/01/latoya-dixon-stock-photography-main.jpg?quality=100&resize=1240,920&strip",
 		},
 		shouts.Shout{
-
+			Image: "https://adobe99u.files.wordpress.com/2018/01/mark-marziars-stock-photography.jpg?quality=100",
 		},
 	)
 
-	return shouts
+	return shoutsList
 }
