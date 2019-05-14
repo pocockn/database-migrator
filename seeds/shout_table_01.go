@@ -7,10 +7,10 @@ import (
 
 // SeedShoutTable seeds the team table with test data.
 func SeedShoutTable(db *gorm.DB) error {
-	teams := seedShouts()
+	shoutSeeds := seedShouts()
 
-	for _, team := range teams {
-		err := db.Create(&team).Error
+	for _, shout := range shoutSeeds {
+		err := db.Create(&shout).Error
 		if err != nil {
 			return err
 		}

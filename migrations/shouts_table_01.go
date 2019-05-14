@@ -4,13 +4,13 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/pocockn/models/api/shouts"
 	"github.com/satori/go.uuid"
-	 gormigrate "gopkg.in/gormigrate.v1"
+	"gopkg.in/gormigrate.v1"
 )
 
 // ShoutTableMigration holds the migration to create a shout table in the DB.
 func ShoutTableMigration() *gormigrate.Migration {
 	return &gormigrate.Migration{
-		ID: uuid.Must(uuid.NewV4(), nil).String(),
+		ID: uuid.Must(uuid.NewV4()).String(),
 		Migrate: func(tx *gorm.DB) error {
 			type Shout struct {
 				gorm.Model

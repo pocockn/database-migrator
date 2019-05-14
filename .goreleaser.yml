@@ -1,0 +1,27 @@
+before:
+  hooks:
+    - go mod download
+builds:
+- env:
+  - CGO_ENABLED=0
+  - GO111MODULE=on
+dockers:
+  -
+    image_templates:
+      - "pococknick91/database-migrator:latest"
+      - "pococknick91/database-migrator:{{ .Tag }}"
+    skip_push: false
+    dockerfile: Dockerfile
+archives:
+- replacements:
+    linux: Linux
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
