@@ -37,7 +37,4 @@ vet:
 	@go tool vet .
 
 release:
-	git tag -a v${VERSION} -m "Release number: ${VERSION}"
-	git push origin v${VERSION}
-	goreleaser
-
+	./release.sh ${VERSION}
