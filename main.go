@@ -1,38 +1,47 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/pocockn/database-migrator/config"
 	"github.com/pocockn/models/api/shouts"
+	"github.com/sirupsen/logrus"
 	"gopkg.in/gormigrate.v1"
 )
 
 func main() {
-	fmt.Print("Starting migrations...\n")
+	logrus.Print("Starting migrations...\n")
 
-	config := config.NewConfig()
-	DB, err := gorm.Open("mysql", config.Database.URL)
-	if err != nil {
-		log.Fatal(err)
+	appConfig := config.NewConfig()
+
+	var DB *gorm.DB
+	var err error
+
+	for i := 0; i <= 30; i++ {
+		DB, err = gorm.Open("mysql", appConfig.Database.URL)
+		if err == nil {
+			err := DB.DB().Ping()
+			if err == nil {
+				DB.LogMode(true)
+				break
+			}
+		}
+
+		if i == 15 {
+			log.Fatalf("Unable to connect to %s after 30 seconds", appConfig.Database.URL)
+		}
+
+		logrus.Infof("%d attempt at connecting to the DB \n", i)
+		time.Sleep(2 * time.Second)
 	}
 
-	// Implement some sort of backing off process here.
-	if err := DB.DB().Ping(); err != nil {
-		log.Fatal(err)
-	} else {
-		log.Print("Database connection established")
-	}
-	DB.LogMode(true)
-
-	// TODO: Only run migrations on dev and if we have new migrations added.
 	gormMigrator := gormigrate.New(DB, gormigrate.DefaultOptions, GenerateMigrations())
 
 	gormMigrator.InitSchema(func(tx *gorm.DB) error {
-		log.Print("Creating initial table schema...")
+		logrus.Print("Creating initial table schema...")
 		err := tx.AutoMigrate(
 			&shouts.Shout{},
 		)
@@ -47,11 +56,11 @@ func main() {
 	if err := gormMigrator.Migrate(); err != nil {
 		log.Fatalf("Could not migrate: %v", err)
 	}
-	log.Printf("Initial schema migration successfull")
+	logrus.Print("Initial schema migration successfull")
 
 	err = processSeeds(DB)
 	if err != nil {
 		log.Fatalf("Error will seeding database: %v", err)
 	}
-	log.Printf("Database seeding successfull")
+	logrus.Print("Database seeding successfull")
 }
