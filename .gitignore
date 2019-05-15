@@ -33,4 +33,5 @@ go.*.coverage.out
 
 .idea
 database-migrator
+database-migrator_unix
 dist/

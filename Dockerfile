@@ -6,10 +6,10 @@ LABEL maintainer="Nick Pocock <pocockn@hotmail.co.uk>"
 # Git is required for fetching the dependencies.
 RUN apk add --no-cache ca-certificates git
 
+# Enable Go Modules
 ENV GO111MODULE=on
 
 RUN mkdir /app
-
 WORKDIR /app
 
 # Fetch dependencies first; they are less susceptible to change on every build
