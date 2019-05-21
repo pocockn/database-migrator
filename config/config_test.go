@@ -1,6 +1,7 @@
 package config_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/pocockn/database-migrator/config"
@@ -8,6 +9,8 @@ import (
 )
 
 func TestConfigCreation(t *testing.T) {
+	err := os.Setenv("ENV", "development")
+	assert.Nil(t, err)
 
 	expectedConfigStruct := config.Config{
 		Database: config.Database{

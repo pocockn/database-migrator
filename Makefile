@@ -31,7 +31,7 @@ push-image: build-linux
 
 run:
 	@$(GOBUILD) -ldflags "-X main.Version=dev -X main.BuildTime=17/01/2017T14:12:35+0000"
-	@./$(BINARY_NAME)
+	@ENV=development ./$(BINARY_NAME)
 
 vet:
 	@go tool vet .

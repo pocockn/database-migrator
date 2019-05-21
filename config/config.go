@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/BurntSushi/toml"
 )
@@ -26,10 +27,11 @@ type (
 // NewConfig creates a new config struct.
 func NewConfig() Config {
 	var config Config
-	// TODO: Load configs based on different environments automatically.
-	if _, err := toml.DecodeFile("./config/development.toml", &config); err != nil {
+
+	if _, err := toml.DecodeFile(fmt.Sprintf("./config/%s.toml", environment()), &config); err != nil {
 		fmt.Println(err)
 	}
+
 	config.Database.URL = generateURL(
 		config.Database.Username,
 		config.Database.Password,
@@ -55,7 +57,5 @@ func generateURL(username string, password string, host string, port string, dat
 }
 
 func environment() string {
-	environment := "development"
-
-	return environment
+	return os.Getenv("ENV")
 }
